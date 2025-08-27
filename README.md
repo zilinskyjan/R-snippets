@@ -38,7 +38,7 @@ theme(plot.title.position = "plot")
 
 ### Getting rid of awkward padding
 
-![fig/bar-graph-padding.png]()
+![padding example](fig/bar-graph-padding.png)
 
 To fix the first plot and create the third plot, add:
 
