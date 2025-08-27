@@ -1,4 +1,6 @@
-A collection of practical R code snippets that solve (my) common data visualization and analysis challenges.
+A collection of practical R code snippets that solve (my) common data visualization and analysis situations.
+
+* See also Allison Koh's collection: [https://github.com/allisonkoh/helpful-code-stuff](https://github.com/allisonkoh/helpful-code-stuff)
 
 ## Data Visualization with ggplot2
 
@@ -33,16 +35,14 @@ Move title to plot area edge for more space:
 theme(plot.title.position = "plot")
 ```
 
-### Custom Date Axis Formatting
-
-Format dates with custom breaks and labels
+### Getting rid of (some) gridlines
 
 ```r
-scale_x_date(
-  name = NULL,  
-  breaks = scales::breaks_width("2 years"),
-  labels = scales::label_date("'%y") 
-)
+theme_minimal() +
+theme(panel.grid.major.y = element_blank(),
+       panel.grid.minor = element_blank(),
+       plot.title = element_text(size = 14, face = "bold"),
+       axis.text = element_text(size = 11)
 ```
 
 ### Control Legend Visibility
@@ -62,6 +62,18 @@ geom_text(show.legend = FALSE)
 `scales::alpha("blue", 0.5)  # 50% transparent blue`
 
 **When to use:** Overlapping points or areas where you need to see underlying data.
+
+### Custom Date Axis Formatting
+
+Format dates with custom breaks and labels
+
+```r
+scale_x_date(
+  name = NULL,  
+  breaks = scales::breaks_width("2 years"),
+  labels = scales::label_date("'%y") 
+)
+```
 
 ## Data Manipulation
 
