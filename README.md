@@ -36,6 +36,16 @@ Move title to plot area edge for more space:
 theme(plot.title.position = "plot")
 ```
 
+### Getting rid of awkward padding
+
+![fig/bar-graph-padding.png]()
+
+To fix the first plot and create the third plot, add:
+
+`scale_x_continuous(expand = c(0, 0),limits = c(0, 42))`
+
+(The important part is using `expand = c(0, 0)`. The code is [here](https://gist.github.com/zilinskyjan/d359158163621c4b744588ee1bc73f93).)
+
 ### Getting rid of (some) gridlines
 
 ```r
