@@ -1,6 +1,7 @@
 A collection of practical R code snippets that solve (my) common data visualization and analysis situations.
 
 * See also Allison Koh's collection: [https://github.com/allisonkoh/helpful-code-stuff](https://github.com/allisonkoh/helpful-code-stuff)
+* Silvia Kim's workshop notes are [here](https://sysilviakim.com/learningR/).
 
 ## Data Visualization with ggplot2
 
@@ -125,6 +126,8 @@ analysis_data <- raw_data %>%
 ```
 **When to use:** Calculating statistics but only for groups with sufficient sample sizes to avoid unreliable estimates.
 
+Accessing publicly available research datasets for reproducible analysis.
+
 ## External Data Access
 
 ### Harvard Dataverse Integration
@@ -138,4 +141,5 @@ dataset <- dataverse::get_dataframe_by_name(
   "doi:10.7910/DVN/XXXXXX"  # Replace with actual DOI
 )
 ```
-**When to use:** Accessing publicly available research datasets for reproducible analysis.
+
+See more here: [https://cran.r-project.org/web/packages/dataverse/vignettes/A-introduction.html](https://cran.r-project.org/web/packages/dataverse/vignettes/A-introduction.html)
