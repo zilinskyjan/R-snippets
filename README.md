@@ -14,7 +14,27 @@ guides(color = guide_legend(reverse = TRUE))
 ```
 **When to use:** Your categorical data appears in one order but the legend shows colors in reverse order.
 
-### Handle Axis Labels
+### Wrapping long labels
+
+#### Sub-plots produced by `facet_wrap()` have long labels
+
+Solution:
+
+`facet_wrap(~ var, labeller = label_wrap_gen(width = 30)`
+
+And you can make the text smaller with `theme(strip.text = element_text(size = 9)`
+
+#### The legend has excessively long labels
+
+Solution:
+
+```
+scale_fill_manual(name = "Legend Title",
+values = c("A" = "#1b9e77", "B" = "#d95f02", "C" = "#7570b3"),
+  labels = function(x) str_wrap(x, width = 20))
+```
+
+#### Handle Axis Labels
 
 Wrap long labels to specified width; **When to use:** Category names or labels are too long and overlap on your plots.
 
@@ -22,7 +42,9 @@ Wrap long labels to specified width; **When to use:** Category names or labels a
 scale_x_discrete(labels = scales::label_wrap(20))
 ```
 
-Make your (long) numbers a bit nicer:
+(This is often preferred, I think, compared to tilting, but in an emergency you can go with `theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))`)
+
+Bonus tip: Make your (long) numbers a bit nicer:
 
 `scale_y_continuous(labels = scales::comma)`
 
