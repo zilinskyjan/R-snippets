@@ -134,7 +134,11 @@ ggeffects::ggpredict(mod, terms = "var1 [1:10 by=0.1]")
 
 ### Summary Statistics with Confidence Intervals
 
+**When to use:** Need descriptive statistics with confidence intervals for grouped data.
+
 #### Option 1
+
+If your sample size is large:
 
 ```
 D %>% D %>% group_by(var) %>%
@@ -145,9 +149,20 @@ D %>% D %>% group_by(var) %>%
 ggplot(aes(x = M,y=yvar)) +
 geom_col() +
 geom_errorbar(aes(xmin = M - 1.96*se, xmax = M + 1.96*se))
+```
+
+Otherwise, if you have N=10, you could run: 
 
 ```
+geom_errorbar(aes(xmin = M + qt(0.025, df = 9) * se, 
+                   xmax = M + qt(0.975, df = 9) * se),
+```
+
+Note that `qt(0.025, df = 9)` is negative, so you do want to type `M + qt(0.025, df = 9)` to obtain the value below the mean. 
+
 #### Option 2
+
+This is fun to use (but you'll run into trouble if your data is constant or missing), so option 1 is more robust.
 
 ```
 D %>% group_by(var) %>%
@@ -156,21 +171,21 @@ summarise(M = mean(outcome, na.rm = TRUE),
             m_lo = t.test(outcome)$conf[1])
 ```            
 
-#### Option 3
+#### Getting the empirical 95% range (so not really an "option 3") but can be useful
 
 ```r
 data %>%
   group_by(group_var) %>%
   summarize(
     mean_val = mean(x, na.rm = TRUE),
-    lower_ci = quantile(x, prob = 0.025, na.rm = TRUE),
-    upper_ci = quantile(x, prob = 0.975, na.rm = TRUE),
+    lower = quantile(x, prob = 0.025, na.rm = TRUE),
+    upper = quantile(x, prob = 0.975, na.rm = TRUE),
     n_obs = sum(!is.na(x))
   )
 ```
-**When to use:** Need descriptive statistics with confidence intervals for grouped data.
 
 ### Filter by Minimum Observations
+
 ```r
 analysis_data <- raw_data %>%
   group_by(group1, group2) %>%
@@ -180,6 +195,7 @@ analysis_data <- raw_data %>%
                         cor(var1, var2, use = "complete.obs"), 
                         NA)
   )
+
 ```
 **When to use:** Calculating statistics but only for groups with sufficient sample sizes to avoid unreliable estimates.
 
@@ -188,6 +204,7 @@ Accessing publicly available research datasets for reproducible analysis.
 ## External Data Access
 
 ### Harvard Dataverse Integration
+
 ```r
 # Set up connection to Harvard Dataverse
 Sys.setenv("DATAVERSE_SERVER" = "dataverse.harvard.edu")
