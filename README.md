@@ -133,6 +133,31 @@ ggeffects::ggpredict(mod, terms = "var1 [1:10 by=0.1]")
 **When to use:** Creating smooth effect plots or predictions across a range of values.
 
 ### Summary Statistics with Confidence Intervals
+
+#### Option 1
+
+```
+D %>% D %>% group_by(var) %>%
+ summarise(M=mean(resp,na.rm=T),
+           sd=sd(resp,na.rm=T),
+           n = sum(!is.na(resp)),
+           se=sd/sqrt(n)) %>%
+ggplot(aes(x = M,y=yvar)) +
+geom_col() +
+geom_errorbar(aes(xmin = M - 1.96*se, xmax = M + 1.96*se))
+
+```
+#### Option 2
+
+```
+D %>% group_by(var) %>%
+summarise(M = mean(outcome, na.rm = TRUE),
+            M_hi = t.test(outcome)$conf[2],
+            m_lo = t.test(outcome)$conf[1])
+```            
+
+#### Option 3
+
 ```r
 data %>%
   group_by(group_var) %>%
